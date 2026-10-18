@@ -12,8 +12,9 @@
     .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.toolbar button,.actions button{appearance:none;border:0;border-radius:6px;background:var(--green);color:#fff;font:inherit;font-weight:700;padding:10px 13px;cursor:pointer}.toolbar button.secondary,.actions button.secondary{background:#e8efeb;color:var(--green);border:1px solid #c8d8cf}.toolbar button.danger{background:#fff0ee;color:#9d3c32;border:1px solid #ebc5bf}
     .row{display:grid;grid-template-columns:minmax(120px,1.2fr) minmax(120px,1.2fr) 110px 100px 38px;gap:8px;align-items:end;margin:9px 0}.field{display:flex;flex-direction:column;gap:4px}.field label{font-size:11px;color:var(--muted);font-weight:700}.field input,.field select{width:100%;min-height:42px;border:1px solid #bdcbc4;border-radius:5px;background:#fff;padding:8px 9px;font:inherit;color:var(--ink)}.price-hint{min-height:18px;color:var(--blue);font-size:11px}.remove{height:42px;border:1px solid #e1c3bf;border-radius:5px;background:#fff5f3;color:#a84136;font-size:19px;cursor:pointer}
     .summary{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0}.metric{border-left:4px solid var(--green);background:#f2f7f4;padding:10px 12px}.metric:nth-child(2){border-left-color:var(--blue)}.metric:nth-child(3){border-left-color:var(--gold)}.metric small{display:block;color:var(--muted);font-size:11px}.metric strong{font-size:22px}
+    .quick-input{border-top:1px solid var(--line);margin-top:14px;padding-top:12px}.quick-input label{display:block;color:var(--muted);font-size:12px;font-weight:700;margin-bottom:5px}.quick-input textarea{width:100%;border:1px solid #bdcbc4;border-radius:5px;padding:9px;font:inherit;resize:vertical}.quick-input button{margin-top:7px}
     .channel-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.channel{border:1px solid var(--line);border-radius:6px;padding:10px}.channel strong{display:block;font-size:14px}.channel span{color:var(--muted);font-size:12px}.channel input{width:58px;border:1px solid #bdcbc4;border-radius:4px;padding:5px;margin-left:4px;font:inherit}
-    .result-group{border-top:1px solid var(--line);padding:12px 0}.result-group:first-child{border-top:0;padding-top:0}.result-title{font-weight:800;margin-bottom:6px}.result-line{display:flex;justify-content:space-between;gap:12px;padding:4px 0;font-size:14px}.result-line span:last-child{font-weight:800;white-space:nowrap}.store-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 20px}.store-list div{display:flex;justify-content:space-between;border-bottom:1px dotted #cfdad4;padding:4px 0;font-size:13px}.note{background:#fff9e9;border-left:4px solid var(--gold);padding:10px 12px;color:#635127;font-size:13px}.actions{display:flex;gap:8px;flex-wrap:wrap;position:sticky;bottom:0;background:rgba(244,247,245,.94);padding:10px 0}.empty{color:var(--muted);font-size:14px}.footer{color:var(--muted);font-size:12px;padding:4px 0 25px}
+    .result-group{border-top:1px solid var(--line);padding:12px 0}.result-group:first-child{border-top:0;padding-top:0}.result-title{font-weight:800;margin-bottom:6px}.result-line{display:flex;justify-content:space-between;gap:12px;padding:4px 0;font-size:14px}.result-line span:last-child{font-weight:800;white-space:nowrap}.store-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 20px}.store-list div{display:flex;justify-content:space-between;border-bottom:1px dotted #cfdad4;padding:4px 0;font-size:13px}.site-preview{margin:8px 0 0;max-height:300px;overflow:auto;background:#f5f8f6;border:1px solid var(--line);padding:10px;font:12px/1.6 ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap}.note{background:#fff9e9;border-left:4px solid var(--gold);padding:10px 12px;color:#635127;font-size:13px}.actions{display:flex;gap:8px;flex-wrap:wrap;position:sticky;bottom:0;background:rgba(244,247,245,.94);padding:10px 0}.empty{color:var(--muted);font-size:14px}.footer{color:var(--muted);font-size:12px;padding:4px 0 25px}
     @media(max-width:650px){.row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}.row .field:nth-child(3),.row .field:nth-child(4){grid-column:span 1}.row .remove{grid-column:2;grid-row:2}.summary{grid-template-columns:1fr 1fr 1fr}.channel-grid{grid-template-columns:1fr 1fr}.store-list{grid-template-columns:1fr}.metric strong{font-size:18px}}
     @media print{header,.entry,.settings,.actions,.footer{display:none!important}body{background:#fff}main{max-width:none;padding:0}section{border:0;margin:0;padding:8px 0}.result-group{break-inside:avoid}}
   </style>
@@ -26,6 +27,11 @@
       <p class="hint">1行に「品目・規格・単価・数量」を入力。規格ごとに別行で入力します。参考価格は目安で、単価は俊美さんが決めます。</p>
       <div id="rows"></div>
       <div class="toolbar"><button id="add">＋ 品目を追加</button><button id="sample" class="secondary">例を入れる</button><button id="clear" class="danger">全消去</button></div>
+      <div class="quick-input">
+        <label for="bulk">まとめ入力（1行：品目｜規格｜価格｜数量）</label>
+        <textarea id="bulk" rows="4" placeholder="きゅうり｜大きい｜240｜15&#10;きゅうり｜曲がり｜188｜10&#10;小松菜｜通常｜160｜40"></textarea>
+        <button id="parseBulk" class="secondary">まとめ入力を反映</button>
+      </div>
     </section>
 
     <section class="settings">
@@ -47,10 +53,16 @@
     </section>
 
     <section>
+      <h2>5. 農総研サイト入力用</h2>
+      <p class="hint">販売先・店舗・品目・価格・数量の確認用一覧です。コピーしてCodexへ渡せます。サイトへの自動登録はしません。</p>
+      <div id="siteInput" class="empty">品目を入力すると表示されます。</div>
+    </section>
+
+    <section>
       <h2>確認</h2>
       <div class="summary"><div class="metric"><small>総数量</small><strong id="totalQty">0個</strong></div><div class="metric"><small>出荷時価格合計</small><strong id="totalAmount">0円</strong></div><div class="metric"><small>入力行</small><strong id="lineCount">0行</strong></div></div>
       <div class="note">このページは農総研サイトへ自動登録しません。内容を確認してから、コピーした文をChatGPTへ貼り付け、登録作業を別に行います。</div>
-      <div class="actions"><button id="copy">ChatGPTへコピー</button><button id="print" class="secondary">印刷する</button><button id="save" class="secondary">入力を保存</button></div>
+      <div class="actions"><button id="copy">ChatGPTへコピー</button><button id="copySite" class="secondary">農総研入力用をコピー</button><button id="print" class="secondary">印刷する</button><button id="save" class="secondary">入力を保存</button></div>
     </section>
     <div class="footer">保存先はこのブラウザ内だけです。Gmailや農総研のログイン情報は入力しません。</div>
   </main>
@@ -66,7 +78,7 @@
       'きゅうり|曲がり':'市場参考：約200〜300円/kg換算の目安｜販売価格目安：158〜210円',
       'きゅうり|SS良品':'市場参考：約200〜300円/kg換算の目安｜販売価格目安：188〜240円'
     };
-    const rowsEl=document.querySelector('#rows'), channelsEl=document.querySelector('#channels');
+    const rowsEl=document.querySelector('#rows'), channelsEl=document.querySelector('#channels'), siteInputEl=document.querySelector('#siteInput');
     const yen=n=>Number(n||0).toLocaleString('ja-JP')+'円';
     const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     function addRow(item='',spec='',price='',qty=''){
@@ -78,14 +90,17 @@
     function validRows(){return [...rowsEl.querySelectorAll('.row')].map(r=>({item:r.querySelector('.item').value.trim(),spec:r.querySelector('.spec').value.trim(),price:Number(r.querySelector('.price').value),qty:Number(r.querySelector('.qty').value)})).filter(x=>x.item&&x.price>0&&x.qty>0)}
     function split(qty){let weights=salesChannels.map(c=>Math.max(0,c.weight)),sum=weights.reduce((a,b)=>a+b,0)||1;let raw=weights.map(w=>qty*w/sum),out=raw.map(Math.floor),left=qty-out.reduce((a,b)=>a+b,0);raw.map((v,i)=>({i,rest:v-out[i]})).sort((a,b)=>b.rest-a.rest).slice(0,left).forEach(x=>out[x.i]++);return out}
     function buildGroups(){const groups={};validRows().forEach(r=>{const k=r.item+'|'+r.spec+'|'+r.price;(groups[k]??={item:r.item,spec:r.spec,price:r.price,qty:0}).qty+=r.qty});return Object.values(groups)}
+    function siteLines(){const lines=[];buildGroups().forEach(g=>{const channelQty=split(g.qty);channelQty.forEach((n,i)=>{if(!n)return;const c=salesChannels[i],base=Math.floor(n/c.stores.length),extra=n%c.stores.length;c.stores.forEach((store,j)=>{const qty=base+(j<extra?1:0);if(qty)lines.push({channel:c.name,store,item:g.item,spec:g.spec,price:g.price,qty})})})});return lines}
+    function siteText(){return ['農総研入力用（確認前の提案）','販売先\t店舗\t品目\t規格\t価格\t数量',...siteLines().map(x=>[x.channel,x.store,x.item,x.spec||'',x.price,x.qty].join('\t'))].join('\n')}
     function render(){const input=validRows(),groups=buildGroups(),totalQty=input.reduce((a,b)=>a+b.qty,0),totalAmount=input.reduce((a,b)=>a+b.price*b.qty,0);document.querySelector('#totalQty').textContent=totalQty.toLocaleString()+'個';document.querySelector('#totalAmount').textContent=yen(totalAmount);document.querySelector('#lineCount').textContent=input.length+'行';
-      if(!groups.length){document.querySelector('#labels').innerHTML='<div class="empty">品目を入力すると表示されます。</div>';document.querySelector('#stores').innerHTML='<div class="empty">品目を入力すると表示されます。</div>';return}
+      if(!groups.length){document.querySelector('#labels').innerHTML='<div class="empty">品目を入力すると表示されます。</div>';document.querySelector('#stores').innerHTML='<div class="empty">品目を入力すると表示されます。</div>';siteInputEl.innerHTML='<div class="empty">品目を入力すると表示されます。</div>';return}
       const labelHTML=groups.map(g=>{const parts=split(g.qty);return `<div class="result-group"><div class="result-title">${esc(g.item)}${g.spec?'｜'+esc(g.spec):''} ${yen(g.price)}：${g.qty}枚</div>${salesChannels.map((c,i)=>`<div class="result-line"><span>${c.name}</span><span>${parts[i]}枚</span></div>`).join('')}</div>`}).join('');document.querySelector('#labels').innerHTML=labelHTML;
       const storeHTML=groups.map(g=>{const parts=split(g.qty);return `<div class="result-group"><div class="result-title">${esc(g.item)}${g.spec?'｜'+esc(g.spec):''} ${yen(g.price)}：${g.qty}個</div>${salesChannels.map((c,i)=>{const n=parts[i];if(!n)return '';const base=Math.floor(n/c.stores.length),extra=n%c.stores.length;return `<div class="result-group"><div class="result-title">${c.name}：${n}個</div><div class="store-list">${c.stores.map((s,j)=>`<div><span>${s}</span><strong>${base+(j<extra?1:0)}個</strong></div>`).join('')}</div></div>`}).join('')}</div>`}).join('');document.querySelector('#stores').innerHTML=storeHTML;
+      siteInputEl.innerHTML=`<div class="result-group"><div class="result-line"><span>登録候補行数</span><span>${siteLines().length}行</span></div><pre class="site-preview">${esc(siteText())}</pre></div>`;
     }
     function save(){localStorage.setItem('suzunoiro-shipping',JSON.stringify({rows:validRows(),weights:salesChannels.map(c=>c.weight)}));}
     function load(){try{const x=JSON.parse(localStorage.getItem('suzunoiro-shipping'));if(x?.rows){rowsEl.innerHTML='';x.rows.forEach(r=>addRow(r.item,r.spec||'',r.price,r.qty));if(x.weights)x.weights.forEach((w,i)=>salesChannels[i].weight=w)}}catch(e){}if(!rowsEl.children.length)addRow();}
-    document.querySelector('#add').addEventListener('click',()=>{addRow();render()});document.querySelector('#sample').addEventListener('click',()=>{rowsEl.innerHTML='';[['小松菜','通常',160,80],['小松菜','通常',188,10],['きゅうり','大きい',211,37],['きゅうり','曲がり',188,9],['きゅうり','SS良品',240,9],['きゅうり','大きい',320,12],['きゅうり','SS良品',158,12]].forEach(x=>addRow(...x));render()});document.querySelector('#clear').addEventListener('click',()=>{rowsEl.innerHTML='';addRow();render()});document.querySelector('#print').addEventListener('click',()=>window.print());document.querySelector('#save').addEventListener('click',()=>{save();alert('このブラウザに保存しました。')});document.querySelector('#copy').addEventListener('click',async()=>{const groups=buildGroups(),lines=['農総研出荷確認','ラベルは販売先別、店舗は出荷提案です。'];groups.forEach(g=>{lines.push(`${g.item}${g.spec?'｜'+g.spec:''} ${g.price}円 ${g.qty}個`);split(g.qty).forEach((n,i)=>lines.push(`- ${salesChannels[i].name}: ${n}枚`));});lines.push(`合計 ${validRows().reduce((a,b)=>a+b.qty,0)}個`);await navigator.clipboard.writeText(lines.join('\n'));alert('ChatGPTへ貼り付ける文をコピーしました。')});
+    document.querySelector('#add').addEventListener('click',()=>{addRow();render()});document.querySelector('#parseBulk').addEventListener('click',()=>{const text=document.querySelector('#bulk').value.trim();if(!text)return;const parsed=text.split(/\r?\n/).map(line=>line.trim()).filter(Boolean).map(line=>line.split(/[|｜,，\t]/).map(x=>x.trim())).filter(x=>x.length>=4);if(!parsed.length){alert('品目｜規格｜価格｜数量の4項目で入力してください。');return}rowsEl.innerHTML='';parsed.forEach(x=>addRow(x[0],x[1],x[2],x[3]));render()});document.querySelector('#sample').addEventListener('click',()=>{rowsEl.innerHTML='';[['小松菜','通常',160,80],['小松菜','通常',188,10],['きゅうり','大きい',211,37],['きゅうり','曲がり',188,9],['きゅうり','SS良品',240,9],['きゅうり','大きい',320,12],['きゅうり','SS良品',158,12]].forEach(x=>addRow(...x));render()});document.querySelector('#clear').addEventListener('click',()=>{rowsEl.innerHTML='';addRow();render()});document.querySelector('#print').addEventListener('click',()=>window.print());document.querySelector('#save').addEventListener('click',()=>{save();alert('このブラウザに保存しました。')});document.querySelector('#copy').addEventListener('click',async()=>{const groups=buildGroups(),lines=['農総研出荷確認','ラベルは販売先別、店舗は出荷提案です。'];groups.forEach(g=>{lines.push(`${g.item}${g.spec?'｜'+g.spec:''} ${g.price}円 ${g.qty}個`);split(g.qty).forEach((n,i)=>lines.push(`- ${salesChannels[i].name}: ${n}枚`));});lines.push(`合計 ${validRows().reduce((a,b)=>a+b.qty,0)}個`);await navigator.clipboard.writeText(lines.join('\n'));alert('ChatGPTへ貼り付ける文をコピーしました。')});document.querySelector('#copySite').addEventListener('click',async()=>{await navigator.clipboard.writeText(siteText());alert('農総研入力用の一覧をコピーしました。')});
     renderChannels();load();render();
   </script>
 </body>
